@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3a355c"> <!-- Replace #FF5733 with your desired accent color -->
+
+    <title>GSTUDIO - CC</title>
+    <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+  />
+  <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    />
+     <!-- MDB -->
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css"
+  rel="stylesheet"
+/>    
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var navbar = document.getElementById('myNavbar');
+    
+            function updateNavbarBackground() {
+                if (window.scrollY > 50 || document.body.classList.contains('show-navbar')) {
+                  navbar.classList.add('solid-bg');
+                  navbar.classList.remove('transparent-bg');
+                  navbar.style.transition = 'background-color 0.3s linear';
+                  navbar.style.backgroundColor = '#322d4b';
+                } else {
+                    navbar.classList.remove('solid-bg');
+                    navbar.classList.add('transparent-bg');
+                    navbar.style.transition = 'background-color 0.65s linear';
+                    navbar.style.backgroundColor = 'transparent';
+                }
+            }
+    
+            // Handle scrolling
+            window.addEventListener('scroll', function () {
+                updateNavbarBackground();
+            });
+    
+            // Handle collapsed button click
+            document.querySelector('.navbar-toggler').addEventListener('click', function () {
+                document.body.classList.toggle('show-navbar');
+                updateNavbarBackground();
+            });
+        });
+    </script>
+    
+</head>
+
+<body style="background-color: #1f1c30;">
+   
+<!-- Pop-up content -->
+<div class="popup" id="popup">
+  <div class="popup-content">
+      <span class="close-btn" onclick="closePopup()">X</span>
+      <h2>Passes are out !</h2>
+      <br>
+      <img src="assets/popup.png" alt="Special Offer Poster" width="300" preload="yes">
+      <br>
+      <button onclick="register()" class="btn btn-warning btn-large rounded-pill my-4" >Get Passes Now ➜</button>
+  </div>
+</div>
+
+<script>
+  // Function to display the pop-up when the page loads
+  window.onload = function() {
+      document.getElementById('popup').style.display = 'block';
+  }
+
+  // Function to close the pop-up
+  function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+  }
+
+  // Function to handle registration
+  function register() {
+      // Redirecting to the registration page
+      window.location.href = "https://gevents.gitam.edu/registration/NjUw";
+  }
+</script>
+
+    <nav id="myNavbar"class="navbar navbar-expand-md fixed-top" style="background: transparent;">
+        <div class="container my-2">
+          <a class="navbar-brand ml-2 md-2 " href="#"><img src="assets/cclogobmin.png" alt="test img"
+         style="width: 170px; height: 50px;">
+        </a>
+         
+          
+          <button
+           class="navbar-toggler ml-2"
+           data-toggle="collapse"
+           data-target="#collapseNav"
+          >
+           <span class="fas fa-bars text-light"></span>
+          </button>
+   
+          <div class="collapse navbar-collapse flex-grow-0 ml-2" id="collapseNav">
+             
+              <a href="assets/Events.pdf"  target="_blank" class="nav-item nav-link text-light h6 mx-3 my-auto">
+               Schedule
+              </a>
+              <!-- <a href="#" class="nav-item nav-link text-light h6 mx-3 my-auto">
+               Updates
+             </a> -->
+             <!-- <a href="login.html" class="nav-item nav-link text-light h6 mx-3 my-auto">
+              Login
+            </a> -->
+            <a href="#cp" class="nav-item nav-link text-light h6 mx-3 my-auto">
+              Competitions
+            </a>
+            <br>
+            <div class="navbar-nav">
+              <a href="https://gevents.gitam.edu/registration/NjUw" target="_blank">
+               <button class="pushable">
+                <span class="shadow"></span>
+                <span class="edge"></span>
+                <span class="front">Fest Pass</span>
+               </button>
+              </a>
+             </div>
+           <br>
+         </div>
+       </div>
+     </nav>
+    
+
+   <!-- banner section -->
+   <section class="video-background">
+    <div>
+      <video autoplay muted playsinline preload="yes">
+        <source src="assets/intro_hevc.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+<section>
+  <div class="container banner d-flex align-items-center video-wrap">
+      <video autoplay preload="yes" muted loop poster="video-poster.jpg" id="background-video">
+          <!-- Default video source -->
+          <source src="assets/.mp4" type="video/mp4">
+      </video>
+      <!-- Overlay div for dimming effect -->
+      <div class=""></div>
+  </div>
+</section>
+<!-- JavaScript to load other elements after the video has finished loading -->
+<script async>
+  // Function to change video source based on screen width
+  function changeVideoSource() {
+      var video = document.getElementById('background-video');
+      var screenWidth = window.innerWidth;
+
+      // Check if screen width is less than 992px (mobile)
+      if (screenWidth < 992) {
+          video.src = 'assets/mobileintro.mp4'; // Mobile video source
+      } else {
+          video.src = 'assets/CCRE_codec.mp4'; // Desktop video source
+      }
+      
+      // Reload the video
+      video.load();
+      // Once the video has finished loading, remove the loading class from the body
+      document.body.classList.remove('loading');
+  }
+
+  // Call the function initially
+  changeVideoSource();
+
+  // Event listener for window resize
+  window.addEventListener('resize', function() {
+      changeVideoSource();
+  });
+
+  // Add a class to the body to indicate that the page is loading
+  document.body.classList.add('loading');
+</script>
+
+<!-- Your remaining website content here, wrapped in a div with a class "content" -->
+<div class="content">
+  <!-- Your other HTML elements here -->
+</div>
+
+    <!-- partner logos -->
+    <div class="container text-center py-5">
+      <h1 class="font-weight-bold">
+        <span class="text-info"><a style="color:#ffffff">Our Partners</a></span>
+      </h1>
+      <div class="lead pb-6" style="color: black;">
+        
+      </div>
+  </div>
+
+</section>
+
+<!-- New section for muted and autoplay YouTube embed -->
+<div class="logos">
+ 
+  <div class="logos-slide">
+    <img src="assets/sp1.jpg"/>
+    <img src="assets/sp2.png" />
+    <img src="assets/sp3.png" />
+    <img src="assets/sp4.jpg" />
+    <img src="assets/sp5.png" />
+    <img src="assets/sp6.png" />
+    <img src="assets/sp7.png" />
+    <img src="assets/sp1.jpg"/>
+    <img src="assets/sp2.png" />
+    <img src="assets/sp3.png" />
+    <img src="assets/sp4.jpg" />
+    <img src="assets/sp5.png" />
+    <img src="assets/sp6.png" />
+    <img src="assets/sp7.png" />
+    <img src="assets/sp1.jpg"/>
+    <img src="assets/sp2.png" />
+    <img src="assets/sp3.png" />
+    <img src="assets/sp4.jpg" />
+    <img src="assets/sp5.png" />
+    <img src="assets/sp6.png" />
+    <img src="assets/sp7.png" />
+  </div>
+  <script>
+    var copy = document.querySelector(".logos-slide").cloneNode(true);
+    document.querySelector(".logos").appendChild(copy);
+  </script>
+</div>
+
+
+
+    <br>
+
+<center>
+      <section id="about">
+        <div class="container"> 
+          <div class="row">
+            <div class="col-md-6 col-12 "> 
+              <h2 class="font-weight-italic" style="color:  rgb(255, 255, 255); font-size: xx-large; font-family: 'Titania';">
+                <a style="color: rgb(255, 255, 255); font-family: Titania;" >
+                 
+      <br>Who are
+                </a> 
+                we?</h2>
+              <br>
+                                <p class=" p6" style=" color: #fff; font-size: large; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+                                  <a style="font-weight: 300; font-size: x-large; font-family: Titania;">G-Studio </a> is a media club of <a style="font-weight: 300; font-size: x-large; font-family: Titania;">GITAM </a>Deemed to be University and a platform for skillful,
+                                    ambitious, and creative people who showcase their talent and passion for
+                                    photography, cinematography, direction, and screenwriting. We collaborate with other
+                                    student clubs to provide an enriching experience. It hosts master classes with
+                                    renowned film technicians and photo workshops with leading photographers. camera
+                                    brands, and mentors. GStudio also allows students to explore their interests and
+                                    hone their skills in a fun and engaging environment. Its range of activities is an
+                                    excellent way for students to develop their creative talents.
+                                </p>
+            </div>
+            <br>          
+          <div class="col-md-6 col-12"> 
+            <br>
+            <img src="assets/gstudio log.jpg" class="img-fluid custom-rounded" style="max-width: 70%; height: auto;" >
+            <style>
+              .custom-rounded {
+    border-radius: 15px;
+}
+
+            </style>
+          </div>
+      
+          </div>
+        </div>
+      </section>
+      <br>
+     <!-- New section for muted, autoplay, and looped YouTube embed -->
+<section id="youtube-video" class="py-5">
+  <div class="container">
+    <div class="container text-center py-2">
+      <h1 class="font-weight-bold">
+        <span class="text-info"><a style="color:#ffffff">Chalana Chitram</a></span>
+      </h1>
+      <div class="lead pb-6" style="color: rgb(212, 212, 212);">
+        2023
+      </div>
+      <div class="row align-items-center py-2 mx-2">
+        <div class="embed-responsive embed-responsive-16by9">
+          <!-- Corrected URL with mute parameter -->
+          <iframe id="youtube-iframe" class="embed-responsive-item" src="https://www.youtube.com/embed/Vls3ipEspps?si=fATdL9UetboWBa5&mute=1&autoplay=1&loop=1&playlist=Vls3ipEspps" allowfullscreen></iframe>
+        </div>
+      </div>
+      
+      <!-- JavaScript code for looping the video -->
+      <script>
+      // Get the iframe element
+      var youtubeIframe = document.getElementById('youtube-iframe');
+      
+      // Add event listener for when the video ends
+      youtubeIframe.addEventListener('ended', function() {
+          // Reload the video to loop it
+          youtubeIframe.contentWindow.location.reload(true);
+      });
+      </script>
+      
+
+     
+  
+      
+      <a></a>
+      <br>
+      <section id="about">
+        <div class="container"> 
+            <div class="row">
+                <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                    <div>
+                            <img src="assets/cc poster.jpg" class="img-fluid" style="max-width: 70%; height: auto;" >
+                    </div>
+                </div>
+                
+                <div class="col-md-6" style="align-items: center; margin-left: -10px;"> 
+                    <h2 class="font-weight-italic" style="color: rgb(255, 255, 255); font-size: xx-large;">
+                        <br>
+                        <a style="color: rgb(255, 255, 255)">
+                          ‎ 
+                          <br>
+
+                          
+                            What is CC
+                        </a>
+                    </h2>
+                    <br>
+                    <p class="p1" style="color: #fff;font-size: large; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+                        GStudio's <a style="font-weight: 300; font-size: x-large; font-family: Titania;">Chalana Chitram</a> aims to provide the audience with a unique and
+                        high-quality 
+                        cinematic experience that combines art and technology to captivate viewers. Creators may learn from experts in the field and
+                        become familiar with cutting-edge filmmaking practices at ChalanaChitram. GStudio has been around for 10 years, a 
+                        significant accomplishment and evidence of the team's commitment and diligence. The celebration this year will
+                        undoubtedly be a memorable occasion and give many more artists a platform to explore the fields of cinema and 
+                        photography. GStudio has been a pioneer in advancing the art of filmmaking during the course of its ten-year 
+                        existence and has assisted in the development of many talented individuals.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+  </center>
+ <br>
+ 
+    
+ <section id="services">
+  <!-- partner logos -->
+
+</div>
+    <div class="container">
+      <div class="container text-center py-2">
+        <h1 class="font-weight-bold">
+          <span class="text-info"><a style="color:#ffffff">Events</a></span>
+        </h1>
+        <div class="lead pb-6" style="color: rgb(212, 212, 212);">
+          Where the fun starts
+        </div>
+        <div class="masonry-container">
+            <!-- Image 1 -->
+            <div class="masonry-item">
+                <img src="assets/wildlife.jpg" alt="Image 1">
+                <div class="image-text" style="color: #fff;">Wildlife photography masterclass➜ <br>
+              </div>
+            </div>
+            <!-- Image 2 -->
+            <div class="masonry-item">
+                <img src="assets/filmscreening.jpg" alt="Image 2">
+                <div class="image-text" style="color: rgb(255, 255, 255);">Movie screening➜</div>
+            </div>
+            <!-- Image 3 -->
+            <div class="masonry-item">
+                <img src="assets/CC23/IMG-20230402-WA0003.jpg" alt="Image 3">
+                <div class="image-text" style="color: rgb(255, 255, 255);">Talkshow ➜</div>
+            </div>
+           
+           
+             <!-- Image 1 -->
+             <div class="masonry-item">
+              <img src="assets/fashionwalk.jpg" alt="Image 1">
+              <div class="image-text" style="color: #fff;">Fashion walk➜ <br>
+            </div>
+            <!-- <div class="tagline" style="color: #fff;">Where creativity meets technology</div> Add the tagline here -->
+          </div>
+           <!-- Image 1 -->
+           <div class="masonry-item">
+            <img src="assets/stars.jpg" alt="Image 1">
+            <div class="image-text" style="color: #fff;">Movie under the stars➜ <br>
+          </div>
+          <!-- <div class="tagline" style="color: #fff;" id="des">Where creativity meets technology</div> Add the tagline here -->
+        </div>
+        
+      
+     <!-- Image 1 -->
+     <div class="masonry-item">
+      <img src="assets/filmmasterclass.jpg" alt="Image 1">
+      <div class="image-text" style="color: #fff;">Film Masterclass with celebrity➜ <br>
+    </div>
+  </div>
+        </div>
+    </div>
+    <style>
+      .fade-img {
+          opacity: 1;
+          transition: opacity 0.5s ease-in-out;
+      }
+  
+      .fade-img:hover {
+          opacity: 0.7;
+      }
+  </style>
+ <!-- Modal Structure -->
+
+</div>
+</div>
+
+
+
+<!-- cc23 -->
+
+
+
+<!-- Title Section -->
+<div class="container bg-image position-relative" style="background-image: url('assets/btn.jpg');" id="reg">
+  <!-- Black translucent overlay -->
+  <div class="overlay"></div>
+  <div class="row text-center align-items-center my-2 py-5">
+    <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+      <a style="color: rgb(0, 0, 0);">--</a>
+      <div class="font-weight-italic" style="font-size: 20px;">
+        <br>
+        <br>
+        <p6 style="color: rgb(255, 255, 255); font-size: xx-large; text-align: center;">Let's celebrate cinema and filmmaking at <br>ChalanaChitram </p6>
+      </div>
+      <br>
+      <br>
+      <a class="btn btn-warning btn-large rounded-pill" href="https://gevents.gitam.edu/registration/NjUw" target="_blank" style="font-size: large; font-weight: 500;"> ‎  Register ➜  ‎ </a>
+      <br>
+      <br>
+    </div>
+  </div>
+  <style>
+    .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+  z-index: 0 ; /* Ensure the overlay is above the background image */
+}
+
+  </style>
+</div>
+<br>
+<div class="container text-center py-2">
+  <h1 class="font-weight-bold">
+    <span class="text-info"><a style="color:#ffffff">CC 23</a></span>
+  </h1>
+  <div class="lead pb-6" style="color: rgb(212, 212, 212);">
+    gallery
+  </div>
+<style>
+  .carousel {
+    width: 100%;
+    margin: 0 auto;
+  }
+</style>
+
+<div id="carouselExampleIndicators" class="carousel slide container-fluid" data-ride="carousel" data-interval="2000">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="9"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="10"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0000.jpg" alt="First slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0001.jpg" alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0002.jpg" alt="Third slide">
+    </div>
+    <div class="carousel-item ">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0003.jpg" alt="Fourth slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0005.jpg" alt="Fifth slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0007.jpg" alt="Sixth slide">
+    </div>
+    <div class="carousel-item ">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0009.jpg" alt="Seventh slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0010.jpg" alt="Eighth slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0013.jpg" alt="Ninth slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0014.jpg" alt="tenth slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="assets/CC23/IMG-20230402-WA0015.jpg" alt="eleventh slide">
+    </div>
+  </div>
+  <a id="cp"></a>
+
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+<br>
+<section>
+  <!-- partner logos -->
+
+</div id="">
+    <div class="container" style="align-items: center;">
+      <div class="container text-center py-2">
+        <h1 class="font-weight-bold">
+          <span class="text-info"><a style="color:#ffffff">Competitions</a></span>
+        </h1>
+        <div class="lead pb-6" style="color: rgb(212, 212, 212);">
+          Where the fun starts
+        </div>
+        <style>
+          /* Custom styles for the gallery */
+          .frame {
+            width: 300px; /* Adjust the size as needed */
+            height: 300px; /* Adjust the size as needed */
+            overflow: hidden;
+            position: relative;
+            margin-bottom: -10px; /* Adjust spacing as needed */
+          }
+          
+          .frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+          }
+          
+          .frame img.active {
+            opacity: 1;
+          }
+        
+          /* Reduce gap between columns */
+          .col-md-6 {
+            padding-right: 2px !important; /* Adjust spacing as needed */
+            padding-left: 2px !important; /* Adjust spacing as needed */
+          }
+          
+        </style>
+        <center>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6">
+              <h1 style="color: white;">Photography</h1>
+
+              <div class="frame">
+                <img src="assets/cp3.jpg" alt="Image 1" class="active">
+                <img src="assets/phg.jpg" alt="Image 2">
+                <img src="assets/phj.jpg" alt="Image 3">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h1 style="color: white;">Trailer-cut</h1>
+
+              <div class="frame">
+                <img src="assets/cp2.jpg" alt="Image 4" class="active">
+                <img src="assets/cp1g.jpg" alt="Image 5">
+                <img src="assets/cp1j.jpg" alt="Image 6">
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6" href="#">
+              <h1 style="color: white;">Shortfilm</h1>
+              <div class="frame">
+                <img src="assets/cp1.jpg" alt="Image 4" class="active">
+                <img src="assets/sfg1.jpg" alt="Image 5">
+                <img src="assets/sfg2.jpg" alt="Image 6">
+                <img src="assets/sfj.jpg" alt="Image 6">
+        
+              </div>
+            </div>
+          </div>
+        </div>
+        </center>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+          // JavaScript for slideshow functionality
+          $(document).ready(function() {
+            $('.frame').each(function() {
+              var $frame = $(this);
+              var $imgs = $frame.find('img');
+              var currentIndex = 0;
+              var interval;
+        
+              function startSlideshow() {
+                interval = setInterval(function() {
+                  $imgs.removeClass('active');
+                  currentIndex = (currentIndex + 1) % $imgs.length;
+                  $imgs.eq(currentIndex).addClass('active');
+                }, 2000);
+              }
+        
+              function pauseSlideshow() {
+                clearInterval(interval);
+              }
+        
+              $frame.hover(pauseSlideshow, startSlideshow);
+        
+              startSlideshow(); // Start the slideshow initially
+            });
+          });
+        </script>
+ 
+</div>
+</div>
+
+
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<style>
+
+</style>
+  </section>
+
+<br>
+<!-- Title Section -->
+<div class="container bg-image position-relative" style="background-image: url('assets/download.jpg');" id="reg">
+  <!-- Black translucent overlay -->
+  <div class="overlay"></div>
+  <div class="row text-center align-items-center my-2 py-5">
+    <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+      <a style="color: rgb(0, 0, 0);">--</a>
+      <div class="font-weight-italic" style="font-size: 20px;">
+        <br>
+        <br>
+        <p6 style="color: rgb(255, 255, 255); font-size: xx-large; text-align: center;">Compete with the best creators across the nation at <br> ChalanaChitram </p6>
+      </div>
+      <br>
+      <br>
+      <a class="btn btn-warning btn-large rounded-pill" href="https://linktr.ee/chalanachitram" target="_blank" style="font-size: large; font-weight: 500;"> ‎  Sign-up ➜  ‎ </a>
+      <br>
+      <br>
+    </div>
+  </div>
+  <style>
+    .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+  z-index: 0 ; /* Ensure the overlay is above the background image */
+}
+
+  </style>
+  
+</div>
+
+
+    <br>
+    <footer>
+      <div class="container-fluid text-center" style="background-color: #0d0721;">
+        <div class="py-5">
+          <h2 style="color: rgb(255, 255, 255);"></h2>
+          <!-- <a href="mailto:gstudioclub@gitam.edu?subject=I wanna be part of another tech revolution!" class="btn btn-outline-light btn-lg mt-3">
+            
+            </a> -->
+         </div>
+         <div class="row">
+          <div class="col-12 col-md-4 py-3">
+            <h5 class=" pb-3" style="color: rgb(255, 255, 255);">More links</h5>
+            
+            <a href="#" class="d-block" style="color: rgb(255, 255, 255);">Home</a>
+            
+            <a href="mailto:gstudioclub@gitam.in?subject=Here is a suggestion!" class="d-block" style="color: rgb(255, 255, 255);">
+              Write a suggestion!  <i class="fas fa-heart" style="color: rgb(255, 255, 255);"></i>
+            </a>
+            <a href="#" class="d-block" style="color: rgb(255, 255, 255);" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a>
+            <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Your contact form or description goes here -->
+                    <p>Email us on: gstudioclub@gitam.in<br>call us on: 6281693119</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>            
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+            <aclass="d-block" style="color: rgb(255, 255, 255);">
+              chalanachitram@gitam.edu
+                <i class="d-block" style="color: rgb(255, 255, 255);"></i>
+          </aclass="d-block">
+          <aclass="d-block" style="color: rgb(255, 255, 255);">
+            vishnu:6281693119
+              <i class="d-block" style="color: rgb(255, 255, 255);"></i>
+        </aclass="d-block">
+        <aclass="d-block" style="color: rgb(255, 255, 255);">
+            kiran:7893833939
+              <i class="d-block" style="color: rgb(255, 255, 255);"></i>
+        </aclass="d-block">
+        </div>
+          <div class="col-12 col-md-4 text-justify py-3" style="color:rgb(255, 255, 255) ;">
+            <p>
+              GStudio: Media club of GITAM, takes the honor to invite you to our very own Film Festival which is happening from 23rd Feb 2024 to 25th Feb 2024 at GITAM (deemed to be) University, Visakhapatnam. The film festival is a celebration of creativity, storytelling, and cultural exchange. It offers a space for cinema enthusiasts to share their unique visions and perspectives, and for audiences to be moved, entertained, and inspired by the power of cinema. Our film festival consists of different activities such as master classes, photo exhibitions, short film contests, and film screenings!
+            </p>
+          </div>
+          <div class="col-12 col-md-4 py-3">
+            <h5 class="text-info pb-3">Social</h5>
+            
+            <a href="https://www.instagram.com/_chalana.chitram_/?hl=en">
+              <i class=" fab fa-instagram h1 d-block" style="color: azure;"></i>
+            </a>
+           
+          </div>
+        </div>
+        <!-- <div class="text-muted py-3">
+          <p>Copyright © ChalanaChitram Pvt.Ltd 2022 | All Rights Reserved</p>
+        </div> -->
+      </div>
+    </footer>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
