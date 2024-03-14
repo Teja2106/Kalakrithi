@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
     if(req.session.isAuthenticated && req.session.lastActivity) {
         const currentTime = Date.now();
-        const inactivityPeriod = 3 * 6 * 1000; //3 min in ms.
+        const inactivityPeriod = 45 * 60 * 1000; //3 min in ms.
 
         if (currentTime - req.session.lastActivity > inactivityPeriod) {
             req.session.destroy((err) => {
