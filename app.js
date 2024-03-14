@@ -102,7 +102,7 @@ app.get('/scanner', (req, res) => {
 app.post('/scanner', async(req, res) => {
     let qrdata = req.body.qrdata;
     try {
-        const { rows } = await pool.query('SELECT * FROM test_reg WHERE qrdata = $1', [qrdata]);
+        const { rows } = await pool.query('SELECT * FROM users WHERE qrdata = $1', [qrdata]);
         if (rows.length > 0){
             res.redirect(`/profile?qrdata=${qrdata}`);
         } else {
@@ -124,7 +124,7 @@ app.post('/re-mail', async(req, res) => {
         let name = req.body.name;
         let dataToSend;
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM test_reg WHERE email = $1', [email]);
+        const result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
     
         if(result.rows > 0) {
             const python = spawn('python3', ['py_mailer/main2.py', '--name', `${name}`, '--email', `${email}`]);
@@ -149,7 +149,7 @@ app.get('/profile', async(req, res) => {
     try {
         let qrdata = req.query.qrdata;
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM test_reg WHERE qrdata = $1', [qrdata]);
+        const result = await client.query('SELECT * FROM users WHERE qrdata = $1', [qrdata]);
         client.release();
 
         if (result.rows.length > 0 ) {
@@ -170,12 +170,12 @@ app.post('/check-in', async(req, res) => {
 
     try {
         const client = await pool.connect();
-        const result = await client.query(`SELECT day${currentDay}_checkin FROM test_reg WHERE qrdata = $1`, [qrdata]);
+        const result = await client.query(`SELECT day${currentDay}_checkin FROM users WHERE qrdata = $1`, [qrdata]);
         if (result.rows[0][`day${currentDay}_checkin`]) {
             client.release();
             res.render('profile.ejs', { error: "You have already checked in for today." });
         } else {
-            await client.query(`UPDATE test_reg SET day${currentDay}_checkin = NOW() WEHRE qrdata = $1`, [qrdata]);
+            await client.query(`UPDATE users SET day${currentDay}_checkin = NOW() WEHRE qrdata = $1`, [qrdata]);
             client.release();
             res.render('profile.ejs', { success: "Check-in successful!" });
             setTimeout(() => {
@@ -211,13 +211,13 @@ app.get('/admin-panel', async(req, res) => {
         try {
             const currentDay = getCurrentDay();
 
-            const day1Result = await pool.query(`SELECT COUNT(*) FROM test_reg WHERE day1_checkin IS NOT NULL`);
+            const day1Result = await pool.query(`SELECT COUNT(*) FROM users WHERE day1_checkin IS NOT NULL`);
             const day1Count = parseInt(day1Result.rows[0].count);
 
-            const day2Result = await pool.query(`SELECT COUNT(*) FROM test_reg WHERE day2_checkin IS NOT NULL`);
+            const day2Result = await pool.query(`SELECT COUNT(*) FROM users WHERE day2_checkin IS NOT NULL`);
             const day2Count = parseInt(day2Result.rows[0].count);
 
-            const recipientsResult = await pool.query('SELECT * FROM test_reg');
+            const recipientsResult = await pool.query('SELECT * FROM users');
             const recipients = recipientsResult.rows;
 
             res.render('admin-panel.ejs', { currentDay, day1Count, day2Count, recipients, error: null });
