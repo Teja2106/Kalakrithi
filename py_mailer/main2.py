@@ -85,7 +85,7 @@ def send_bulk_emails():
         hashed_email = hashlib.sha256(recipient_data["recipient_email"].encode()).hexdigest()
 
         # Update the 'hash_data' column in the specified table
-        # cur.execute(f"UPDATE {table_name} SET hash_mail = %s WHERE email = %s", (hashed_email, recipient_data["recipient_email"]))
+        cur.execute(f"UPDATE {table_name} SET hash_mail = %s WHERE email = %s", (hashed_email, recipient_data["recipient_email"]))
         conn.commit()
 
         # Render the HTML template with the recipient's data
