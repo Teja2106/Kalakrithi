@@ -127,7 +127,7 @@ app.post('/re-mail', async(req, res) => {
         const result = await client.query('SELECT * FROM test_reg WHERE email = $1', [email]);
     
         if(result.rows > 0) {
-            const python = spawn('python', ['py_mailer/main2.py', '--name', `${name}`, '--email', `${email}`]);
+            const python = spawn('python3', ['py_mailer/main2.py', '--name', `${name}`, '--email', `${email}`]);
             python.stdout.on('data', function(data) {
                 dataToSend = data.toString();
             });
