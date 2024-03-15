@@ -135,12 +135,12 @@ app.get("/profile", async (req, res) => {
       res.render("profile.ejs", { user });
     } else {
       res.render("profile.ejs", {
-        error: "No such user exists in the database.",
+        error: "No such user exists in the database.", user
       });
     }
   } catch (err) {
     console.error("Error executing query.", err);
-    res.render("profile.ejs", { error: "An error occured. Please try again." });
+    res.render("profile.ejs", { error: "An error occured. Please try again.", user });
   }
 });
 
@@ -154,7 +154,7 @@ app.post("/check-in", async (req, res) => {
       `SELECT day${currentDay}_checkin FROM users WHERE hash_mail = $1`,
       [hash_mail]
     );
-    let user = result.rows[0];
+    const user = result.rows[0];
     if (result.rows[0][`day${currentDay}_checkin`]) {
       client.release();
       res.render("profile.ejs", {
@@ -174,7 +174,7 @@ app.post("/check-in", async (req, res) => {
   } catch (err) {
     console.error("Error checkig in: ", err);
     res.render("profile.ejs", {
-      error: "Failed to check-in. Please Try later.",
+      error: "Failed to check-in. Please Try later.", user
     });
   }
 });
