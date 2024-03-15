@@ -79,7 +79,6 @@ def send_bulk_emails():
     # Iterate over the rows and process each recipient
     for row in rows:
         recipient_data = dict(zip(column_mapping.values(), row))
-        recipient_data["recipient_txn_id"] = recipient_data["recipient_txn_id"][11:]
 
         # Encrypt recipient_email using SHA-256
         hashed_email = hashlib.sha256(recipient_data["recipient_email"].encode()).hexdigest()
