@@ -62,18 +62,18 @@ app.get("/scanner", (req, res) => {
 });
 
 app.post("/scanner", async (req, res) => {
-  let qrdata = req.body.qrdata;
+  let hash_mail = req.body.hash_mail;
   try {
-    const { rows } = await pool.query("SELECT * FROM users WHERE qrdata = $1", [
-      qrdata,
+    const { rows } = await pool.query("SELECT * FROM users WHERE hash_mail = $1", [
+      hash_mail,
     ]);
     if (rows.length > 0) {
-      res.redirect(`/profile?qrdata=${qrdata}`);
+      res.redirect(`/profile?hash_mail=${hash_mail}`);
     } else {
       res.render("scanner.ejs", { error: "User not found." });
     }
   } catch (err) {
-    console.error("Error processing qrdata.", err);
+    console.error("Error processing hash_mail.", err);
     res.render("scanner.ejs", {
       error: "An error occured. Please try again later.",
     });
@@ -123,10 +123,10 @@ app.post("/re-mail", async (req, res) => {
 
 app.get("/profile", async (req, res) => {
   try {
-    let qrdata = req.query.qrdata;
+    let hash_mail = req.query.hash_mail;
     const client = await pool.connect();
-    const result = await client.query("SELECT * FROM users WHERE qrdata = $1", [
-      qrdata,
+    const result = await client.query("SELECT * FROM users WHERE hash_mail = $1", [
+      hash_mail,
     ]);
     client.release();
 
@@ -146,13 +146,13 @@ app.get("/profile", async (req, res) => {
 
 app.post("/check-in", async (req, res) => {
   const currentDay = getCurrentDay();
-  const { qrdata } = req.body;
+  const { hash_mail } = req.body;
 
   try {
     const client = await pool.connect();
     const result = await client.query(
-      `SELECT day${currentDay}_checkin FROM users WHERE qrdata = $1`,
-      [qrdata]
+      `SELECT day${currentDay}_checkin FROM users WHERE hash_mail = $1`,
+      [hash_mail]
     );
     if (result.rows[0][`day${currentDay}_checkin`]) {
       client.release();
@@ -161,8 +161,8 @@ app.post("/check-in", async (req, res) => {
       });
     } else {
       await client.query(
-        `UPDATE users SET day${currentDay}_checkin = NOW() WEHRE qrdata = $1`,
-        [qrdata]
+        `UPDATE users SET day${currentDay}_checkin = NOW() WEHRE hash_mail = $1`,
+        [hash_mail]
       );
       client.release();
       res.render("profile.ejs", { success: "Check-in successful!" });
