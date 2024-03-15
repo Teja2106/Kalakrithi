@@ -13,8 +13,8 @@ const { Pool } = pkg;
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
-  database: "kk_ticketing",
-  password: "Shoyo@UwU",
+  database: "kalakrithi",
+  password: "shoyouwu",
   port: 5432,
 });
 
@@ -30,7 +30,7 @@ function getCurrentDay() {
   if (now >= eventStartDate && now <= eventEndDate) {
     const diffTime = Math.abs(now - eventStartDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays + 1;
+    return diffDays;
   } else {
     return -1;
   }
@@ -64,9 +64,7 @@ app.get("/scanner", (req, res) => {
 app.post("/scanner", async (req, res) => {
   let hash_mail = req.body.hash_mail;
   try {
-    const { rows } = await pool.query("SELECT * FROM users WHERE hash_mail = $1", [
-      hash_mail,
-    ]);
+    const { rows } = await pool.query("SELECT * FROM users WHERE hash_mail = $1", [hash_mail]);
     if (rows.length > 0) {
       res.redirect(`/profile?hash_mail=${hash_mail}`);
     } else {
@@ -125,22 +123,18 @@ app.get("/profile", async (req, res) => {
   try {
     let hash_mail = req.query.hash_mail;
     const client = await pool.connect();
-    const result = await client.query("SELECT * FROM users WHERE hash_mail = $1", [
-      hash_mail,
-    ]);
+    const result = await client.query("SELECT * FROM users WHERE hash_mail = $1", [hash_mail]);
     client.release();
 
     if (result.rows.length > 0) {
       const user = result.rows[0];
-      res.render("profile.ejs", { user });
+      res.render("profile.ejs", { user, error: "", success: "" });
     } else {
-      res.render("profile.ejs", {
-        error: "No such user exists in the database.", user
-      });
+      res.render("profile.ejs", { error: "No such user exists in the database.", user });
     }
   } catch (err) {
     console.error("Error executing query.", err);
-    res.render("profile.ejs", { error: "An error occured. Please try again.", user });
+    res.send('An error occured');
   }
 });
 
@@ -150,29 +144,19 @@ app.post("/check-in", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const result = await client.query(
-      `SELECT day${currentDay}_checkin FROM users WHERE hash_mail = $1`,
-      [hash_mail]
-    );
+    const result = await client.query(`SELECT day${currentDay}_checkin FROM users WHERE hash_mail = $1`, [hash_mail]);
     const user = result.rows[0];
     if (result.rows[0][`day${currentDay}_checkin`]) {
       client.release();
-      res.render("profile.ejs", {
-        error: "You have already checked in for today.", user
-      });
+      return res.render("profile.ejs", { error: "You have already checked in for today.", user });
     } else {
-      await client.query(
-        `UPDATE users SET day${currentDay}_checkin = NOW() WEHRE hash_mail = $1`,
-        [hash_mail]
-      );
+      await client.query(`UPDATE users SET day${currentDay}_checkin = NOW() WHERE hash_mail = $1`, [hash_mail]);
       client.release();
-      res.render("profile.ejs", { success: "Check-in successful!", user });
+      return res.render("profile.ejs", { success: "Check-in successful!", user, error: "" });
     }
   } catch (err) {
-    console.error("Error checkig in: ", err);
-    res.render("profile.ejs", {
-      error: "Failed to check-in. Please Try later.", user
-    });
+    console.error("Error checking in: ", err);
+    return res.render("profile.ejs", { error: "Failed to check-in. Please try again later.", user });
   }
 });
 
