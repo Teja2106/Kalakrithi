@@ -103,6 +103,7 @@ def send_bulk_emails():
         qr_img_path = f"qr_code.png"
         generate_qr_code(hashed_email, qr_img_path)
 
+        cur.execute(f"UPDATE {table_name} SET comment = %s WHERE email = %s", ("Mail Sent", recipient_data["recipient_email"]))
         qr_ticket = qr_barbie(qr_img_path)
 
         # Attach the QR code image as File
@@ -135,7 +136,6 @@ def send_bulk_emails():
         # Add the email to the sent_emails dictionary
         sent_emails[recipient_data["recipient_email"]] = hashed_email
         print("Mail sent to", recipient_data["recipient_email"])
-        cur.execute(f"UPDATE {table_name} SET comment = %s WHERE email = %s", ("Mail Sent", recipient_data["recipient_email"]))
 
     print("All Mails Sent!")
 
