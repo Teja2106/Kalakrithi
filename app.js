@@ -27,7 +27,7 @@ app.use(session({
     secret: 'kalakrithifest',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: false }
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
