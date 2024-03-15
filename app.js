@@ -167,9 +167,6 @@ app.post("/check-in", async (req, res) => {
       );
       client.release();
       res.render("profile.ejs", { success: "Check-in successful!", user });
-      setTimeout(() => {
-        res.redirect("/scanner");
-      }, 3000);
     }
   } catch (err) {
     console.error("Error checkig in: ", err);
