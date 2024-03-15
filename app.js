@@ -77,8 +77,8 @@ app.get('/scanner-login', (req, res) => {
 });
 
 app.post('/scanner-login', (req, res) => {
-    let hardCodedEmail = 'admin@example.com';
-    let hardCodedPassword = 'shoyouwu';
+    let hardCodedEmail = 'culturalnight@kk.2k24';
+    let hardCodedPassword = 'Fest2k24CN';
     let email = req.body.email;
     let password = req.body.password;
 
@@ -194,7 +194,7 @@ app.get('/admin', (req, res) => {
 
 app.post('/admin', (req, res) => {
     let adminUsername = 'admin';
-    let adminPassword = 'Password';
+    let adminPassword = 'Shoyo@UwU';
     let username = req.body.username;
     let password = req.body.password;
 
