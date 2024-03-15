@@ -196,61 +196,62 @@ def send_individual_email(name, email):
         cur.execute(f"DELETE FROM {table_name} WHERE email = %s", (email,))
         conn.commit()
 
-    # Insert a new row into the database
-    cur.execute(f"INSERT INTO {table_name} (name, email, hash_mail) VALUES (%s, %s, %s)", (name, email, hashed_email))
-    conn.commit()
+        # Insert a new row into the database
+        cur.execute(f"INSERT INTO {table_name} (name, email, hash_mail) VALUES (%s, %s, %s)", (name, email, hashed_email))
+        conn.commit()
 
-    # Load the template environment
-    template_dir = os.path.dirname(__file__)
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template(os.getenv("HTML_TEMPLATE"))
+        # Load the template environment
+        template_dir = os.path.dirname(__file__)
+        env = Environment(loader=FileSystemLoader(template_dir))
+        template = env.get_template(os.getenv("HTML_TEMPLATE"))
 
-    # Render the HTML template with the recipient's data
-    html_content = template.render(name=name, email=email)
+        # Render the HTML template with the recipient's data
+        html_content = template.render(name=name, email=email)
 
-    # Create message container
-    msg = MIMEMultipart()
-    msg["Subject"] = subject
-    msg["To"] = email
+        # Create message container
+        msg = MIMEMultipart()
+        msg["Subject"] = subject
+        msg["To"] = email
 
-    # Attach the HTML content
-    msg.attach(MIMEText(html_content, "html"))
+        # Attach the HTML content
+        msg.attach(MIMEText(html_content, "html"))
 
-    # Generate QR code image
-    qr_img_path = f"qr_code.png"
-    generate_qr_code(hashed_email, qr_img_path)
+        # Generate QR code image
+        qr_img_path = f"qr_code.png"
+        generate_qr_code(hashed_email, qr_img_path)
 
-    qr_ticket = qr_barbie(qr_img_path)
+        qr_ticket = qr_barbie(qr_img_path)
 
-    # Attach the QR code image as File
-    with open(qr_ticket, "rb") as f:
-        qr_code = MIMEImage(f.read())
-        qr_code.add_header("Content-Disposition", "attachment", filename=f"KK_Ticket_{name}.png")
-        msg.attach(qr_code)
+        # Attach the QR code image as File
+        with open(qr_ticket, "rb") as f:
+            qr_code = MIMEImage(f.read())
+            qr_code.add_header("Content-Disposition", "attachment", filename=f"KK_Ticket_{name}.png")
+            msg.attach(qr_code)
 
-    # Attach the image as Embed
-    with open(qr_ticket, "rb") as f:
-        image_data = f.read()
-        image = MIMEImage(image_data)
-        image.add_header("Content-ID", "<template>")
-        image.add_header("Content-Disposition", "inline", filename=os.path.basename(qr_ticket))
-        msg.attach(image)
+        # Attach the image as Embed
+        with open(qr_ticket, "rb") as f:
+            image_data = f.read()
+            image = MIMEImage(image_data)
+            image.add_header("Content-ID", "<template>")
+            image.add_header("Content-Disposition", "inline", filename=os.path.basename(qr_ticket))
+            msg.attach(image)
 
-    # Attach PDF File
-    pdf_file_path = "guidelines_c.pdf"
+        # Attach PDF File
+        pdf_file_path = "guidelines_c.pdf"
 
-    with open(pdf_file_path, "rb") as pdf_file:
-        pdf_attachment = MIMEApplication(pdf_file.read())
-        pdf_attachment.add_header("Content-Disposition", "attachment", filename="Guidelines.pdf")
-        msg.attach(pdf_attachment)
+        with open(pdf_file_path, "rb") as pdf_file:
+            pdf_attachment = MIMEApplication(pdf_file.read())
+            pdf_attachment.add_header("Content-Disposition", "attachment", filename="Guidelines.pdf")
+            msg.attach(pdf_attachment)
 
-    # Send email
-    email_sender = EmailSender(smtp_server, smtp_port, sender_email, sender_password)
-    email_sender.send_email(email, msg)
-    email_sender.close()
-    print(f"Mail sent to {email}")
-    cur.execute(f"UPDATE {table_name} SET comment = %s WHERE email = %s", ("Mail Sent", email))
-
+        # Send email
+        email_sender = EmailSender(smtp_server, smtp_port, sender_email, sender_password)
+        email_sender.send_email(email, msg)
+        email_sender.close()
+        print(f"Mail sent to {email}")
+        cur.execute(f"UPDATE {table_name} SET comment = %s WHERE email = %s", ("Mail Sent", email))
+    else:
+        print("User not registered")
     # Close the cursor and the connection
     cur.close()
     conn.close()
