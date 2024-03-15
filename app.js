@@ -157,7 +157,7 @@ app.post("/check-in", async (req, res) => {
     if (result.rows[0][`day${currentDay}_checkin`]) {
       client.release();
       res.render("profile.ejs", {
-        error: "You have already checked in for today.",
+        error: "You have already checked in for today.", user
       });
     } else {
       await client.query(
@@ -165,7 +165,7 @@ app.post("/check-in", async (req, res) => {
         [hash_mail]
       );
       client.release();
-      res.render("profile.ejs", { success: "Check-in successful!" });
+      res.render("profile.ejs", { success: "Check-in successful!", user });
       setTimeout(() => {
         res.redirect("/scanner");
       }, 3000);
