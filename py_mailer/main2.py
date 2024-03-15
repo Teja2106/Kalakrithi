@@ -84,6 +84,8 @@ def send_bulk_emails():
         # Encrypt recipient_email using SHA-256
         hashed_email = hashlib.sha256(recipient_data["recipient_email"].encode()).hexdigest()
 
+        
+
         # Update the 'hash_data' column in the specified table
         cur.execute(f"UPDATE {table_name} SET hash_mail = %s WHERE email = %s", (hashed_email, recipient_data["recipient_email"]))
         conn.commit()
@@ -185,6 +187,15 @@ def send_individual_email(name, email):
 
     # Encrypt recipient_email using SHA-256
     hashed_email = hashlib.sha256(email.encode()).hexdigest()
+
+    # Check if the email already exists in the database
+    cur.execute(f"SELECT email FROM {table_name} WHERE email = %s", (email,))
+    existing_email = cur.fetchone()
+
+    if existing_email:
+        # If email already exists, delete the existing row
+        cur.execute(f"DELETE FROM {table_name} WHERE email = %s", (email,))
+        conn.commit()
 
     # Insert a new row into the database
     cur.execute(f"INSERT INTO {table_name} (name, email, hash_mail) VALUES (%s, %s, %s)", (name, email, hashed_email))
