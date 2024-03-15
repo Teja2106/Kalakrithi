@@ -154,6 +154,7 @@ app.post("/check-in", async (req, res) => {
       `SELECT day${currentDay}_checkin FROM users WHERE hash_mail = $1`,
       [hash_mail]
     );
+    let user = result.rows[0];
     if (result.rows[0][`day${currentDay}_checkin`]) {
       client.release();
       res.render("profile.ejs", {
