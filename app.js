@@ -22,13 +22,6 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.set("views engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-  if (req.session.isAuthenticated) {
-    req.session.lastActivity = Date.now();
-  }
-  next();
-});
-
 function getCurrentDay() {
   const now = new Date();
   const eventStartDate = new Date("2024-03-15");
